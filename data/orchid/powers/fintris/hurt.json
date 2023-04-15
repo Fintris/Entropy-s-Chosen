@@ -1,0 +1,49 @@
+{
+    "type": "origins:multiple",
+    "hurt": {
+        "type": "origins:modify_damage_taken",
+        "bientity_condition": {
+            "type": "origins:actor_condition",
+            "condition": {
+                "type": "origins:and",
+                "conditions": [
+                    {
+                        "type": "origins:origin",
+                        "origin": "orchid:fintris",
+                        "layer": "origins:origin"
+                    },
+                    {
+                        "type": "origins:power",
+                        "power": "orchid:fintris/sharpenactual"
+                    },
+                    {
+                        "type": "origins:equipped_item",
+                        "equipment_slot": "mainhand",
+                        "item_condition": {
+                            "type": "origins:ingredient",
+                            "ingredient": {
+                                "tag": "orchid:sword"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "damage_condition": {
+            "type": "origins:name",
+            "name": "player"
+        },
+        "apply_armor_condition": {
+            "type": "origins:constant",
+            "value": false
+        }
+    },
+    "revoke": {
+        "type": "origins:action_over_time",
+        "interval": 60,
+        "entity_action": {
+            "type": "origins:execute_command",
+            "command": "power revoke @s orchid:fintris/hurt orchid:fintris"
+        }
+    }
+}

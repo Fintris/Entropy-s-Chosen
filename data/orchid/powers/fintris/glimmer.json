@@ -1,0 +1,23 @@
+{
+    "type": "origins:multiple",
+    "hidden": true,
+    "glimmer": {
+        "type": "carrier:carry",
+        "condition": {
+            "type": "origins:and",
+            "conditions": [
+                {
+                    "type": "origins:creative_flying",
+                    "inverted": true
+                },
+                {
+                    "type": "origins:sneaking"
+                }
+            ]
+        }
+    },
+    "extrade": {
+        "type": "extrade:entity_group",
+        "group": "extrade:outerworldly"
+    }
+}

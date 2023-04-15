@@ -1,0 +1,1 @@
+particle minecraft:dust_color_transition 0.600 0.212 0.812 1 0.702 0.961 1.000 ~ ~1 ~0 .3 0.7 .3 0 45 force @a

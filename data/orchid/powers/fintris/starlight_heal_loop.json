@@ -1,0 +1,85 @@
+{
+    "type": "origins:action_on_callback",
+    "entity_action_gained": {
+        "type": "origins:and",
+        "actions": [
+            {
+                "type": "origins:if_else",
+                "condition": {
+                    "type": "origins:resource",
+                    "resource": "orchid:fintris/starlight_decrease_starlight_calc",
+                    "comparison": ">=",
+                    "compare_to": 714
+                },
+                "if_action": {
+                    "type": "origins:and",
+                    "actions": [
+                        {
+                            "type": "origins:if_else",
+                            "condition": {
+                                "type": "origins:relative_health",
+                                "comparison": "<",
+                                "compare_to": 1
+                            },
+                            "if_action": {
+                                "type": "origins:execute_command",
+                                "command": "scoreboard players add #heal fintris.dummy1 1"
+                            }
+                        },
+                        {
+                            "type": "origins:heal",
+                            "amount": 1
+                        },
+                        {
+                            "type": "origins:if_else",
+                            "condition": {
+                                "type": "origins:resource",
+                                "resource": "orchid:fintris/tp_cooldown",
+                                "comparison": ">",
+                                "compare_to": 0
+                            },
+                            "if_action": {
+                                "type": "origins:and",
+                                "actions": [
+                                    {
+                                        "type": "origins:change_resource",
+                                        "resource": "orchid:fintris/tp_cooldown",
+                                        "change": -60
+                                    },
+                                    {
+                                        "type": "origins:execute_command",
+                                        "command": "scoreboard players add #cdr fintris.dummy1 1"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "type": "origins:change_resource",
+                "resource": "orchid:fintris/starlight_decrease_starlight_calc",
+                "change": -714
+            },
+            {
+                "type": "origins:revoke_power",
+                "power": "orchid:fintris/starlight_heal_loop",
+                "source": "orchid:fintris"
+            }
+        ]
+    },
+    "entity_action_lost": {
+        "type": "origins:if_else",
+        "condition": {
+            "type": "origins:resource",
+            "resource": "orchid:fintris/starlight_decrease_starlight_calc",
+            "comparison": ">=",
+            "compare_to": 714
+        },
+        "if_action": {
+            "type": "origins:grant_power",
+            "power": "orchid:fintris/starlight_heal_loop",
+            "source": "orchid:fintris"
+        }
+    }
+}

@@ -1,0 +1,35 @@
+V2.6 (Hopefully the last one)
+-Bug fixes
+-Added Regen and Instant Health immunity
+-Fixed thorns and suffocation immunity
+-Revealed all advancements
+-Fixed Double Vision advancement and renamed it to Sense of Self
+-Changed credits
+-Changed root advancement and background
+
+V2.5
+-Changed a lot of stuff to be less overwhelming
+-This includes:
+-Changed Entropic Step charge to be quieter and pleasant
+-Removed the friends advancements
+-Removed FX upon choosing the origin and respawning
+-Made passive particles less frequent
+-Added a red particle to Entropic Step to signify its more chaotic power
+-Made only 1 flash particle appear in all teleports
+-Removed the Chorus Fruit sound when landing while crouched
+-Made the Amethyst noise when damaged higher pitched to sound more alien-like
+-Removed Woven Reminder and A Glimpse of Infinity advancements
+
+-Made it a lot harder to parry your own arrows or tridents
+-Overhauled advancements
+
+V2.4
+-Changed around Starlight messages
+-Removed sfx when deflecting
+-Added tooltips for weapons that qualify for arrow deflection and Infinite Potential
+-Added a purple tint
+-Added particles
+-Removed the insomnia parts of Strange Energy as they were pointless
+-Removed Crying Obsidian advancment
+-Added an advancment that refrences Bovines and Buttercups
+-Made deflecting an arrow grant the play "Not Today, Thank You", as they cannot get it with Unwieldy

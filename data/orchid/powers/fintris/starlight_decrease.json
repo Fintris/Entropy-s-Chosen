@@ -1,0 +1,78 @@
+{
+    "hidden": true,
+    "type": "origins:multiple",
+    "starlight_calc": {
+        "type": "origins:resource",
+        "min": 0,
+        "max": 5000,
+        "hud_render": {
+            "should_render": false
+        }
+    },
+    "resource": {
+        "type": "origins:resource",
+        "min": 0,
+        "max": 4,
+        "start_value": 0,
+        "hud_render": {
+            "should_render": false,
+            "sprite_location": "origins:textures/gui/community/spiderkolo/resource_bar_03.png",
+            "bar_index": 18
+        },
+        "max_action": {
+            "type": "origins:and",
+            "actions": [
+                {
+                    "type": "origins:modify_resource",
+                    "resource": "*:*_starlight_calc",
+                    "modifier": {
+                        "operation": "add_base_early",
+                        "value": 0,
+                        "resource": "orchid:fintris/alien_body_starlight"
+                    }
+                },
+                {
+                    "type": "origins:modify_resource",
+                    "resource": "*:*_starlight_calc",
+                    "modifier": {
+                        "operation": "multiply_total_multiplicative",
+                        "value": 10
+                    }
+                },
+                {
+                    "type": "origins:execute_command",
+                    "command": "function orchid:fintris/starlight_heal"
+                }
+            ]
+        }
+    },
+    "tick": {
+        "type": "origins:action_over_time",
+        "interval": 20,
+        "entity_action": {
+            "type": "origins:change_resource",
+            "resource": "*:*_resource",
+            "change": 1
+        },
+        "condition": {
+            "type": "origins:resource",
+            "resource": "orchid:fintris/alien_body_starlight",
+            "comparison": ">",
+            "compare_to": 0
+        }
+    },
+    "particle": {
+        "type": "origins:action_over_time",
+        "interval": 3,
+        "condition": {
+            "type": "origins:resource",
+            "resource": "*:*_resource",
+            "comparison": "==",
+            "compare_to": 3
+        },
+        "entity_action": {
+            "type": "origins:execute_command",
+            "command": "function orchid:fintris/fx/secdel"
+        }
+    }
+}

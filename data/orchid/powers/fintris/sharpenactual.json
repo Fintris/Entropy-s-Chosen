@@ -1,0 +1,319 @@
+{
+    "name": "§d§nRift Sharpen",
+    "description": "Your strikes are empowered by rift-energy created when you teleport with §dEntropic Step§r, opening a 3 second window for you to land 1 strike and deal true damage, as well as gaining a large chunk of starlight AND inflicting §5Void Sepsis§r. \nThese 3 seconds are referred to as §dInfinite Potential§r.",
+    "badges": [
+        {
+            "sprite": "minecraft:textures/item/ender_pearl.png",
+            "text": "Charging §dEntropic Step§r OR being in §dInfinite Potential§r will allow you to do a lot more knockback when punching. This will not do true damage, nor will it inflict §5Void Sepsis§r."
+        },
+        {
+            "sprite": "minecraft:textures/mob_effect/darkness.png",
+            "text": "§5Void Sepsis§r is an infection that stops the body from healing entirely. Your enemies will be inflicted with this for 6 seconds upon being hit by a sharpened strike."
+        },
+        {
+            "sprite": "minecraft:textures/item/glow_ink_sac.png",
+            "text": "You illuminate a dark purple color during §dInfinite Potential§r."
+        }
+    ],
+    "type": "origins:multiple",
+    "sharpen_decrease": {
+        "type": "origins:action_over_time",
+        "interval": 60,
+        "entity_action": {
+            "type": "origins:revoke_power",
+            "power": "orchid:fintris/sharpenactual",
+            "source": "orchid:fintris"
+        }
+    },
+    "damage_grant": {
+        "type": "origins:action_over_time",
+        "interval": 1,
+        "entity_action": {
+            "type": "origins:area_of_effect",
+            "radius": 10,
+            "bientity_action": {
+                "type": "origins:and",
+                "actions": [
+                    {
+                        "type": "origins:target_action",
+                        "action": {
+                            "type": "origins:and",
+                            "actions": [
+                                {
+                                    "type": "origins:grant_power",
+                                    "power": "orchid:fintris/hurt",
+                                    "source": "orchid:fintris"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "bientity_condition": {
+                "type": "origins:target_condition",
+                "condition": {
+                    "type": "origins:living"
+                }
+            }
+        },
+        "condition": {
+            "type": "origins:and",
+            "conditions": [
+                {
+                    "type": "origins:equipped_item",
+                    "equipment_slot": "mainhand",
+                    "item_condition": {
+                        "type": "origins:ingredient",
+                        "ingredient": {
+                            "tag": "orchid:sword"
+                        }
+                    }
+                }
+            ]
+        }
+    },
+    "raw_power": {
+        "type": "origins:shaking"
+    },
+    "target_effect": {
+        "type": "origins:action_on_hit",
+        "bientity_action": {
+            "type": "origins:and",
+            "actions": [
+                {
+                    "type": "origins:actor_action",
+                    "action": {
+                        "type": "origins:and",
+                        "actions": [
+                            {
+                                "type": "origins:revoke_power",
+                                "power": "orchid:fintris/sharpenactual",
+                                "source": "orchid:fintris"
+                            },
+                            {
+                                "type": "origins:change_resource",
+                                "resource": "orchid:fintris/alien_body_starlight",
+                                "change": 250
+                            },
+                            {
+                                "type": "origins:execute_command",
+                                "command": "particle dust 0.467 0.000 1.000 1 ~ ~ ~ 0.3 0.8 0.3 0.1 15 force"
+                            },
+                            {
+                                "type": "origins:if_else",
+                                "condition": {
+                                    "type": "origins:nbt",
+                                    "nbt": "{Tags:[\"starlight.clear\"]}"
+                                },
+                                "if_action": {
+                                    "type": "origins:and",
+                                    "actions": [
+                                        {
+                                            "type": "origins:grant_power",
+                                            "power": "orchid:fintris/decrease_reset",
+                                            "source": "orchid:fintris"
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "type": "origins:execute_command",
+                                "command": "advancement grant @s only orchid:sharp"
+                            },
+                            {
+                                "type": "origins:execute_command",
+                                "command": "function orchid:fintris/fx/strike_self"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "type": "origins:target_action",
+                    "action": {
+                        "type": "origins:and",
+                        "actions": [
+                            {
+                                "type": "origins:execute_command",
+                                "command": "function orchid:fintris/fx/strike"
+                            },
+                            {
+                                "type": "origins:grant_power",
+                                "power": "orchid:fintris/rift_curse",
+                                "source": "orchid:fintris"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "cooldown": 0,
+        "hud_render": {
+            "should_render": false,
+            "bar_index": 5
+        },
+        "condition": {
+            "type": "origins:and",
+            "conditions": [
+                {
+                    "type": "origins:equipped_item",
+                    "equipment_slot": "mainhand",
+                    "item_condition": {
+                        "type": "origins:ingredient",
+                        "ingredient": {
+                            "tag": "orchid:sword"
+                        }
+                    }
+                }
+            ]
+        }
+    },
+    "rift_punch": {
+        "type": "origins:action_on_hit",
+        "bientity_action": {
+            "type": "origins:target_action",
+            "action": {
+                "type": "origins:and",
+                "actions": [
+                    {
+                        "type": "origins:add_velocity",
+                        "z": 2,
+                        "y": 0.2,
+                        "space": "velocity"
+                    },
+                    {
+                        "type": "origins:execute_command",
+                        "command": "function orchid:fintris/fx/punch"
+                    }
+                ]
+            }
+        },
+        "condition": {
+            "type": "origins:and",
+            "conditions": [
+                {
+                    "type": "origins:equipped_item",
+                    "equipment_slot": "mainhand",
+                    "item_condition": {
+                        "type": "origins:ingredient",
+                        "ingredient": {
+                            "item": "minecraft:air"
+                        }
+                    }
+                }
+            ]
+        }
+    },
+    "advancement": {
+        "type": "origins:self_action_on_hit",
+        "entity_action": {
+            "type": "origins:and",
+            "actions": [
+                {
+                    "type": "origins:execute_command",
+                    "command": "advancement grant @s only orchid:punch"
+                },
+                {
+                    "type": "origins:change_resource",
+                    "resource": "orchid:fintris/tp_storecharge",
+                    "change": -30
+                }
+            ]
+        },
+        "condition": {
+            "type": "origins:and",
+            "conditions": [
+                {
+                    "type": "origins:equipped_item",
+                    "equipment_slot": "mainhand",
+                    "item_condition": {
+                        "type": "origins:ingredient",
+                        "ingredient": {
+                            "item": "minecraft:air"
+                        }
+                    }
+                }
+            ]
+        },
+        "cooldown": 20
+    },
+    "overlay": {
+        "type": "origins:overlay",
+        "texture": "minecraft:textures/misc/nausea.png",
+        "strength": 0.7,
+        "red": 0.4431372549,
+        "green": 0,
+        "blue": 0.72156862745,
+        "draw_mode": "nausea",
+        "draw_phase": "above_hud",
+        "hide_with_hud": false,
+        "visible_in_third_person": false
+    },
+    "glow": {
+        "type": "origins:self_glow",
+        "bientity_condition": {
+            "type": "origins:can_see"
+        },
+        "use_teams": false,
+        "red": 0.4431372549,
+        "green": 0,
+        "blue": 0.72156862745
+    },
+    "traitor": {
+        "type": "origins:self_action_on_kill",
+        "entity_action": {
+            "type": "origins:execute_command",
+            "command": "advancement grant @s only orchid:traitor"
+        },
+        "cooldown": 0,
+        "hud_render": {
+            "should_render": false,
+            "sprite_location": "origins:textures/gui/community/spiderkolo/resource_bar_01.png",
+            "bar_index": 5
+        },
+        "target_condition": {
+            "type": "origins:and",
+            "conditions": [
+                {
+                    "type": "origins:origin",
+                    "origin": "orchid:fintris",
+                    "layer": "origins:origin"
+                },
+                {
+                    "type": "origins:power",
+                    "power": "orchid:fintris/rift_curse"
+                }
+            ]
+        }
+    },
+    "bagel": {
+        "type": "origins:self_action_on_kill",
+        "entity_action": {
+            "type": "origins:execute_command",
+            "command": "advancement grant @s only orchid:everything"
+        },
+        "cooldown": 0,
+        "hud_render": {
+            "should_render": false,
+            "sprite_location": "origins:textures/gui/community/spiderkolo/resource_bar_01.png",
+            "bar_index": 5
+        },
+        "target_condition": {
+            "type": "origins:and",
+            "conditions": [
+                {
+                    "type": "origins:in_block",
+                    "block_condition": {
+                        "type": "origins:height",
+                        "comparison": "<=",
+                        "compare_to": 0
+                    }
+                },
+                {
+                    "type": "origins:dimension",
+                    "dimension": "minecraft:end",
+                    "inverted": true
+                }
+            ]
+        }
+    }
+}

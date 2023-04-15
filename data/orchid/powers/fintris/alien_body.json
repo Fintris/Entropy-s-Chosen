@@ -1,0 +1,402 @@
+{
+	"name": "§d§nStarlight",
+	"description": "The Entropy parasite allows the collection of §3Starlight§r to heal yourself instead of natural regeneration, displayed in a meter above your hunger bar. After going 6 seconds without gaining §3Starlight§r, all your current §3Starlight§r will be consumed, healing you for 1 health and reducing the cooldown of §dEntropic Step§r by 3 seconds per consumed notch of the §3Starlight§r meter. Reaching full §3Starlight§r will instantly consume the meter, fully healing you and completely resetting the cooldown of §dEntropic Step§r. \nYour food meter can be converted into §3Starlight§r by §esneaking§r, though this will not work at full health. §3Starlight§r can also be gained by achieving a §bpower surge§r with §dEntropic Blink§r, deflecting a projectile with §dCerulean Senses§r, or inflicting §5Void Sepsis§r through §5Infinite Potential§r.",
+	"badges": [
+		{
+			"sprite": "minecraft:textures/item/nether_star.png",
+			"text": "§3Starlight§r gain from §dCerulean Senses§r is low, but it will reset the 6 second delay before §3Starlight§r is consumed, allowin you to maintain your §3Starlight§r for longer. Briefly sneaking to generate §3Starlight§r can also achieve this."
+		},
+		{
+			"sprite": "minecraft:textures/mob_effect/saturation.png",
+			"text": "Generating §3Starlight§r by §esneaking§r is quite costly on your food meter -- if it begins to starve you, you can eat simultaneous to generating §3Starlight§r."
+		},
+		{
+			"sprite": "minecraft:textures/item/glowstone_dust.png",
+			"text": "§dEntropic Blink§r §bpower surges§r will fill a fifth of your §3Starlight§r; §5Infinite Potential§r hits half of it; and \n§dCerulean Senses§r deflects by 5%."
+		}
+	],
+	"type": "origins:multiple",
+	"speed": {
+		"type": "origins:attribute",
+		"modifier": {
+			"attribute": "minecraft:generic.movement_speed",
+			"value": 0.2,
+			"operation": "multiply_total"
+		}
+	},
+	"fall": {
+		"type": "origins:invulnerability",
+		"damage_condition": {
+			"type": "origins:name",
+			"name": "fall"
+		},
+		"condition": {
+			"type": "origins:sneaking"
+		}
+	},
+	"starlight": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 500,
+		"start_value": 0,
+		"hud_render": {
+			"should_render": true,
+			"sprite_location": "origins:textures/gui/community/spiderkolo/resource_bar_03.png",
+			"bar_index": 18
+		},
+		"max_action": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:execute_command",
+					"command": "function orchid:fintris/starlight_full_heal"
+				}
+			]
+		}
+	},
+	"start_function": {
+		"type": "origins:action_on_callback",
+		"entity_action_added": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:execute_command",
+					"command": "function orchid:start"
+				},
+				{
+					"type": "origins:execute_command",
+					"command": "advancement grant @s only orchid:friends"
+				},
+				{
+					"type": "origins:revoke_power",
+					"power": "orchid:fintris/slow",
+					"source": "orchid:fintris"
+				}
+			]
+		},
+		"entity_action_gained": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:execute_command",
+					"command": "function orchid:start"
+				}
+			]
+		}
+	},
+	"starlight_qol": {
+		"type": "origins:action_on_callback",
+		"entity_action_respawned": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:change_resource",
+					"resource": "*:*_starlight",
+					"change": 0,
+					"operation": "set"
+				},
+				{
+					"type": "origins:execute_command",
+					"command": "tag @s add starlight.clear"
+				},
+				{
+					"type": "origins:change_resource",
+					"resource": "orchid:fintris/tp_cooldown",
+					"change": 600,
+					"operation": "set"
+				}
+			]
+		}
+	},
+	"more_food": {
+		"type": "origins:modify_food",
+		"item_condition": {
+			"inverted": false,
+			"type": "origins:food"
+		},
+		"saturation_modifier": {
+			"value": 0.2,
+			"operation": "multiply_total"
+		},
+		"food_modifier": {
+			"value": 0.5,
+			"operation": "multiply_total"
+		}
+	},
+	"tooltip": {
+		"type": "origins:tooltip",
+		"item_condition": {
+			"type": "origins:ingredient",
+			"ingredient": {
+				"tag": "orchid:yucky"
+			}
+		},
+		"text": "Looks gross, tastes great!",
+		"color": "light_purple"
+	},
+	"hunger": {
+		"type": "origins:modify_food",
+		"prevent_effects": true,
+		"item_condition": {
+			"type": "origins:ingredient",
+			"ingredient": {
+				"tag": "orchid:yucky"
+			}
+		},
+		"saturation_modifier": {
+			"operation": "addition",
+			"value": 0.1
+		},
+		"food_modifier": {
+			"operation": "multiply_base",
+			"value": 0.5
+		}
+	},
+	"particles": {
+		"type": "origins:particle",
+		"particle": {
+			"type": "minecraft:dust_color_transition",
+			"params": "0.600 0.212 0.812 1 0.663 0.980 0.871"
+		},
+		"frequency": 1,
+		"condition": {
+			"type": "origins:and",
+			"conditions": [
+				{
+					"type": "origins:invisible",
+					"inverted": true
+				},
+				{
+					"type": "origins:resource",
+					"comparison": ">=",
+					"resource": "*:*_starlight",
+					"compare_to": 250
+				}
+			]
+		}
+	},
+	"landfx": {
+		"type": "origins:action_on_land",
+		"entity_action": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:execute_command",
+					"command": "particle minecraft:dust_color_transition 0.600 0.212 0.812 1 0.663 0.980 0.871 ~ ~ ~ 0.6 -0.4 0.6 1 20"
+				},
+				{
+					"type": "origins:execute_command",
+					"command": "particle minecraft:soul_fire_flame ~ ~ ~ 0.6 -0.4 0.6 0 10"
+				},
+				{
+					"type": "origins:play_sound",
+					"sound": "minecraft:block.wart_block.break",
+					"pitch": 0.82,
+					"volume": 1
+				}
+			]
+		},
+		"condition": {
+			"type": "origins:and",
+			"conditions": [
+				{
+					"type": "origins:sneaking"
+				},
+				{
+					"type": "origins:fall_distance",
+					"comparison": ">=",
+					"compare_to": 4
+				}
+			]
+		}
+	},
+	"suff": {
+		"type": "origins:invulnerability",
+		"damage_condition": {
+			"type": "origins:name",
+			"name": "inWall"
+		},
+		"condition": {
+			"type": "origins:in_block",
+			"block_condition": {
+				"type": "origins:constant",
+				"value": true
+			}
+		}
+	},
+	"ihatethornssomuch": {
+		"type": "origins:invulnerability",
+		"damage_condition": {
+			"type": "origins:and",
+			"conditions": [
+				{
+					"type": "origins:name",
+					"name": "thorns"
+				},
+				{
+					"type": "origins:attacker",
+					"entity_condition": {
+						"type": "origins:or",
+						"conditions": [
+							{
+								"type": "origins:entity_type",
+								"entity_type": "minecraft:guardian"
+							},
+							{
+								"type": "origins:entity_type",
+								"entity_type": "minecraft:elder_guardian"
+							}
+						]
+					},
+					"inverted": true
+				}
+			]
+		}
+	},
+	"immune_effects": {
+		"type": "origins:effect_immunity",
+		"effects": [
+			"minecraft:regeneration",
+			"minecraft:instant_health"
+		]
+	},
+	"hurt_sounds": {
+		"type": "origins:self_action_when_hit",
+		"entity_action": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:execute_command",
+					"command": "function orchid:fintris/fx/ouch"
+				}
+			]
+		},
+		"cooldown": 7
+	},
+	"lower_health": {
+		"type": "origins:attribute",
+		"modifier": {
+			"name": "Max health increase",
+			"attribute": "minecraft:generic.max_health",
+			"value": -4,
+			"operation": "addition"
+		}
+	},
+	"literally_unwieldy_my_god": {
+		"type": "origins:prevent_item_use",
+		"item_condition": {
+			"type": "origins:ingredient",
+			"ingredient": {
+				"tag": "origins:shields"
+			}
+		}
+	},
+	"no_heal": {
+		"type": "origins:disable_regen"
+	},
+	"armor": {
+		"type": "origins:attribute",
+		"modifier": {
+			"name": "Half Armor",
+			"attribute": "minecraft:generic.armor",
+			"value": -0.5,
+			"operation": "multiply_total"
+		}
+	},
+	"armor_toughness": {
+		"type": "origins:attribute",
+		"modifier": {
+			"name": "Half Toughness",
+			"attribute": "minecraft:generic.armor_toughness",
+			"value": -0.5,
+			"operation": "multiply_total"
+		}
+	},
+	"feather_adv": {
+		"type": "origins:action_on_land",
+		"entity_action": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:execute_command",
+					"command": "advancement grant @s only orchid:feather"
+				}
+			]
+		},
+		"condition": {
+			"type": "origins:and",
+			"conditions": [
+				{
+					"type": "origins:sneaking"
+				},
+				{
+					"type": "origins:fall_distance",
+					"comparison": ">=",
+					"compare_to": 20
+				}
+			]
+		}
+	},
+	"what": {
+		"type": "origins:action_over_time",
+		"interval": 1,
+		"entity_action": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:execute_command",
+					"command": "advancement grant @s only orchid:what"
+				}
+			]
+		},
+		"condition": {
+			"type": "origins:and",
+			"conditions": [
+				{
+					"type": "origins:equipped_item",
+					"equipment_slot": "head",
+					"item_condition": {
+						"type": "origins:ingredient",
+						"ingredient": {
+							"item": "minecraft:air"
+						},
+						"inverted": true
+					}
+				},
+				{
+					"type": "origins:equipped_item",
+					"equipment_slot": "chest",
+					"item_condition": {
+						"type": "origins:ingredient",
+						"ingredient": {
+							"item": "minecraft:air"
+						},
+						"inverted": true
+					}
+				},
+				{
+					"type": "origins:equipped_item",
+					"equipment_slot": "legs",
+					"item_condition": {
+						"type": "origins:ingredient",
+						"ingredient": {
+							"item": "minecraft:air"
+						},
+						"inverted": true
+					}
+				},
+				{
+					"type": "origins:equipped_item",
+					"equipment_slot": "feet",
+					"item_condition": {
+						"type": "origins:ingredient",
+						"ingredient": {
+							"item": "minecraft:air"
+						},
+						"inverted": true
+					}
+				}
+			]
+		}
+	}
+}

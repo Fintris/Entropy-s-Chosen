@@ -1,0 +1,339 @@
+{
+	"type": "origins:multiple",
+	"revoked": {
+		"type": "origins:action_on_callback",
+		"entity_action_removed": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:trigger_cooldown",
+					"power": "orchid:fintris/blink_long_cooldown"
+				}
+			]
+		}
+	},
+	"slow": {
+		"type": "origins:attribute",
+		"modifier": {
+			"attribute": "minecraft:generic.movement_speed",
+			"operation": "addition",
+			"value": -1000,
+			"name": "Increased sprinting speed"
+		}
+	},
+	"jump": {
+		"type": "origins:modify_jump",
+		"modifier": {
+			"operation": "addition",
+			"value": -100
+		}
+	},
+	"every_tick": {
+		"type": "origins:action_over_time",
+		"entity_action": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:raycast",
+					"distance": 12,
+					"block": true,
+					"entity": false,
+					"shape_type": "visual",
+					"fluid_handling": "none",
+					"miss_action": {
+						"type": "origins:and",
+						"actions": [
+							{
+								"type": "origins:execute_command",
+								"command": "execute anchored eyes positioned ^ ^ ^12 run execute positioned ~ ~-0.5 ~ run particle minecraft:dust 0.302 1.000 0.859 1 ~ ~1 ~0 .3 0.7 .3 0 45 force @a"
+							}
+						]
+					},
+					"command_step": 1,
+					"command_at_hit": "function orchid:fintris/fx/rift"
+				},
+				{
+					"type": "origins:execute_command",
+					"command": "particle dust_color_transition 0.600 0.212 0.812 1 0.702 0.961 1.000 ~ ~ ~ .5 .9999 .5 0.1 50"
+				},
+				{
+					"type": "origins:execute_command",
+					"command": "tp @s @s"
+				}
+			]
+		},
+		"interval": 1
+	},
+	"tick_down": {
+		"type": "origins:action_over_time",
+		"entity_action": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:revoke_power",
+					"power": "orchid:fintris/blinkgranted",
+					"source": "orchid:fintris"
+				},
+				{
+					"type": "origins:delay",
+					"action": {
+						"type": "origins:and",
+						"actions": [
+							{
+								"type": "origins:raycast",
+								"distance": 12,
+								"block": true,
+								"entity": false,
+								"shape_type": "visual",
+								"fluid_handling": "none",
+								"miss_action": {
+									"type": "origins:and",
+									"actions": [
+										{
+											"type": "origins:execute_command",
+											"command": "execute anchored eyes run tp @s ^ ^ ^12"
+										},
+										{
+											"type": "origins:if_else",
+											"condition": {
+												"type": "origins:power",
+												"power": "orchid:fintris/backstab",
+												"source": "orchid:fintris"
+											},
+											"if_action": {
+												"type": "origins:and",
+												"actions": [
+													{
+														"type": "origins:revoke_power",
+														"power": "orchid:fintris/backstab",
+														"source": "orchid:fintris"
+													},
+													{
+														"type": "origins:grant_power",
+														"power": "orchid:fintris/backstab",
+														"source": "orchid:fintris"
+													}
+												]
+											},
+											"else_action": {
+												"type": "origins:and",
+												"actions": [
+													{
+														"type": "origins:grant_power",
+														"power": "orchid:fintris/backstab",
+														"source": "orchid:fintris"
+													}
+												]
+											}
+										},
+										{
+											"type": "origins:delay",
+											"action": {
+												"type": "origins:execute_command",
+												"command": "function orchid:fintris/fx/blink"
+											},
+											"ticks": 5
+										},
+										{
+											"type": "origins:delay",
+											"action": {
+												"type": "origins:execute_command",
+												"command": "particle minecraft:dust 0.302 1.000 0.859 1 ~ ~1 ~0 .3 0.7 .3 0 45 force @a"
+											},
+											"ticks": 5
+										},
+										{
+											"type": "origins:extinguish"
+										},
+										{
+											"type": "origins:set_fall_distance",
+											"fall_distance": 0
+										},
+										{
+											"type": "origins:if_else",
+											"condition": {
+												"type": "origins:fall_flying"
+											},
+											"if_action": {
+												"type": "origins:and",
+												"actions": [
+													{
+														"type": "origins:add_velocity",
+														"z": 0.7,
+														"space": "local"
+													},
+													{
+														"type": "origins:execute_command",
+														"command": "advancement grant @s only orchid:different"
+													}
+												]
+											}
+										},
+										{
+											"type": "origins:area_of_effect",
+											"radius": 3,
+											"bientity_action": {
+												"type": "origins:and",
+												"actions": [
+													{
+														"type": "origins:target_action",
+														"action": {
+															"type": "origins:and",
+															"actions": [
+																{
+																	"type": "origins:damage",
+																	"amount": 1,
+																	"source": {
+																		"name": "magic",
+																		"bypasses_armor": false,
+																		"unblockable": false
+																	}
+																},
+																{
+																	"type": "origins:add_velocity",
+																	"z": 0.7,
+																	"y": 0.2,
+																	"space": "velocity"
+																},
+																{
+																	"type": "origins:execute_command",
+																	"command": "function orchid:fintris/fx/puncture"
+																}
+															]
+														}
+													},
+													{
+														"type": "origins:actor_action",
+														"action": {
+															"type": "origins:and",
+															"actions": [
+																{
+																	"type": "origins:grant_power",
+																	"power": "orchid:fintris/blinkbenefit",
+																	"source": "orchid:fintris"
+																},
+																{
+																	"type": "origins:execute_command",
+																	"command": "advancement grant @s only orchid:puncture"
+																}
+															]
+														}
+													}
+												]
+											}
+										}
+									]
+								},
+								"hit_action": {
+									"type": "origins:and",
+									"actions": [
+										{
+											"type": "origins:if_else",
+											"condition": {
+												"type": "origins:power",
+												"power": "orchid:fintris/backstab",
+												"source": "orchid:fintris"
+											},
+											"if_action": {
+												"type": "origins:and",
+												"actions": [
+													{
+														"type": "origins:revoke_power",
+														"power": "orchid:fintris/backstab",
+														"source": "orchid:fintris"
+													},
+													{
+														"type": "origins:grant_power",
+														"power": "orchid:fintris/backstab",
+														"source": "orchid:fintris"
+													}
+												]
+											},
+											"else_action": {
+												"type": "origins:and",
+												"actions": [
+													{
+														"type": "origins:grant_power",
+														"power": "orchid:fintris/backstab",
+														"source": "orchid:fintris"
+													}
+												]
+											}
+										},
+										{
+											"type": "origins:delay",
+											"action": {
+												"type": "origins:execute_command",
+												"command": "function orchid:fintris/fx/blink"
+											},
+											"ticks": 5
+										},
+										{
+											"type": "origins:delay",
+											"action": {
+												"type": "origins:execute_command",
+												"command": "function orchid:fintris/fx/rift"
+											},
+											"ticks": 5
+										},
+										{
+											"type": "origins:extinguish"
+										},
+										{
+											"type": "origins:gain_air",
+											"value": 100
+										},
+										{
+											"type": "origins:grant_power",
+											"power": "orchid:fintris/increase_reset",
+											"source": "orchid:fintris"
+										},
+										{
+											"type": "origins:set_fall_distance",
+											"fall_distance": 0
+										},
+										{
+											"type": "origins:execute_command",
+											"command": "particle minecraft:dust_color_transition 0.600 0.212 0.812 1 0.702 0.961 1.000 ~ ~1 ~0 3 0.7 3 0 20 force @a"
+										}
+									]
+								},
+								"command_step": 1,
+								"command_at_hit": "tp @s ~ ~ ~",
+								"command_along_ray": "particle dust 0.302 1.000 0.859 1 ~ ~ ~ 0 0 0 1 0 force"
+							}
+						]
+					},
+					"ticks": 1
+				}
+			]
+		},
+		"interval": 9
+	},
+	"cancel": {
+		"type": "origins:self_action_when_hit",
+		"entity_action": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:revoke_power",
+					"power": "orchid:fintris/blinkgranted",
+					"source": "orchid:fintris"
+				},
+				{
+					"type": "origins:execute_command",
+					"command": "title @s actionbar {\"text\":\"Blink Canceled!\",\"color\":\"light_purple\",\"bold\":false,\"italic\":false}"
+				},
+				{
+					"type": "origins:execute_command",
+					"command": "function orchid:fintris/fx/canceled"
+				},
+				{
+					"type": "origins:execute_command",
+					"command": "advancement grant @s only orchid:lolnope"
+				}
+			]
+		},
+		"cooldown": 0
+	}
+}

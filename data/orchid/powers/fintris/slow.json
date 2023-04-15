@@ -1,0 +1,9 @@
+{
+    "type": "origins:attribute",
+    "modifier": {
+        "name": "Max health increase",
+        "attribute": "minecraft:generic.movement_speed",
+        "value": -0.75,
+        "operation": "multiply_base"
+    }
+}

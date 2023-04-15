@@ -1,0 +1,48 @@
+{
+    "type": "origins:action_on_callback",
+    "entity_action_gained": {
+        "type": "origins:and",
+        "actions": [
+            {
+                "type": "origins:if_else",
+                "condition": {
+                    "type": "origins:relative_health",
+                    "comparison": "<",
+                    "compare_to": 1
+                },
+                "if_action": {
+                    "type": "origins:execute_command",
+                    "command": "tag @s add starlight.heal"
+                }
+            },
+            {
+                "type": "origins:if_else",
+                "condition": {
+                    "type": "origins:resource",
+                    "resource": "orchid:fintris/tp_cooldown",
+                    "comparison": ">",
+                    "compare_to": 0
+                },
+                "if_action": {
+                    "type": "origins:execute_command",
+                    "command": "tag @s add starlight.cdr"
+                }
+            },
+            {
+                "type": "origins:heal",
+                "amount": 32767
+            },
+            {
+                "type": "origins:change_resource",
+                "resource": "orchid:fintris/tp_cooldown",
+                "change": 600,
+                "operation": "set"
+            },
+            {
+                "type": "origins:revoke_power",
+                "power": "orchid:fintris/starlight_heal_full",
+                "source": "orchid:fintris"
+            }
+        ]
+    }
+}

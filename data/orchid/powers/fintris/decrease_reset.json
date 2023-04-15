@@ -1,0 +1,29 @@
+{
+    "type": "origins:action_on_callback",
+    "entity_action_gained": {
+        "type": "origins:and",
+        "actions": [
+            {
+                "type": "origins:change_resource",
+                "resource": "orchid:fintris/starlight_decrease_resource",
+                "change": 0,
+                "operation": "set"
+            },
+            {
+                "type": "origins:revoke_power",
+                "power": "orchid:fintris/starlight_decrease",
+                "source": "orchid:fintris"
+            },
+            {
+                "type": "origins:grant_power",
+                "power": "orchid:fintris/starlight_decrease",
+                "source": "orchid:fintris"
+            },
+            {
+                "type": "origins:revoke_power",
+                "power": "orchid:fintris/decrease_reset",
+                "source": "orchid:fintris"
+            }
+        ]
+    }
+}

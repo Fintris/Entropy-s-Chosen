@@ -1,0 +1,28 @@
+{
+    "__comment": "Made with TheDestruc7i0n's advancements generator: https://advancements.thedestruc7i0n.ca",
+    "display": {
+        "title": {
+            "text": "Void's Tongue",
+            "color": "dark_purple"
+        },
+        "description": {
+            "text": "Puncture your enemy's heart with a surge of Rift Energy."
+        },
+        "icon": {
+            "item": "minecraft:echo_shard"
+        },
+        "frame": "challenge",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "no": {
+            "trigger": "minecraft:impossible"
+        }
+    },
+    "rewards": {
+        "experience": 0
+    },
+    "parent": "orchid:root"
+}

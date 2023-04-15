@@ -1,0 +1,31 @@
+{
+    "display": {
+        "title": {
+            "text": "Entropy's Chosen",
+            "color": "dark_purple",
+            "strikethrough": false,
+            "italic":true
+        },
+        "description": {
+            "text": "Become imbued with the Entropy, warping your body and gifting you abilities that mortals dream of."
+        },
+        "icon": {
+            "item": "minecraft:purple_stained_glass",
+            "nbt": "{Enchantments:[{}]}"
+        },
+        "frame": "task",
+        "show_toast": false,
+        "announce_to_chat": false,
+        "hidden": false,
+        "background": "minecraft:textures/block/bubble_coral_block.png"
+    },
+    "criteria": {
+        "chose_fintris": {
+            "trigger": "origins:chose_origin",
+            "conditions": {
+                "origin": "orchid:fintris"
+            }
+        
+        }
+    }
+}

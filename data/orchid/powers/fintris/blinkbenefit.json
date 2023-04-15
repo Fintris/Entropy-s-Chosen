@@ -1,0 +1,183 @@
+{
+	"type": "origins:multiple",
+	"callback": {
+		"type": "origins:action_on_callback",
+		"entity_action_added": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:change_resource",
+					"resource": "*:fintris/alien_body_starlight",
+					"change": 100
+				},
+				{
+					"type": "origins:execute_command",
+					"command": "particle dust 0.467 0.000 1.000 1 ~ ~ ~ 0.3 0.8 0.3 0.1 15 force"
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:nbt",
+						"nbt": "{Tags:[\"starlight.clear\"]}"
+					},
+					"if_action": {
+						"type": "origins:and",
+						"actions": [
+							{
+								"type": "origins:grant_power",
+								"power": "orchid:fintris/decrease_reset",
+								"source": "orchid:fintris"
+							}
+						]
+					}
+				}
+			]
+		}
+	},
+	"more_damage": {
+		"type": "origins:modify_damage_dealt",
+		"damage_condition": {
+			"type": "origins:name",
+			"name": "player"
+		},
+		"modifier": {
+			"operation": "multiply_total",
+			"value": 0.5
+		}
+	},
+	"target_effect": {
+		"type": "origins:action_on_hit",
+		"bientity_action": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:actor_action",
+					"action": {
+						"type": "origins:and",
+						"actions": [
+							{
+								"type": "origins:execute_command",
+								"command": "advancement grant @s only orchid:double"
+							},
+							{
+								"type": "origins:revoke_power",
+								"power": "orchid:fintris/blinkbenefit",
+								"source": "orchid:fintris"
+							},
+							{
+								"type": "origins:execute_command",
+								"command": "function orchid:fintris/fx/benefitbye"
+							}
+						]
+					}
+				},
+				{
+					"type": "origins:target_action",
+					"action": {
+						"type": "origins:and",
+						"actions": [
+							{
+								"type": "origins:execute_command",
+								"command": "function orchid:fintris/fx/strike"
+							},
+							{
+								"type": "origins:execute_command",
+								"command": "function orchid:fintris/fx/double"
+							}
+						]
+					}
+				}
+			]
+		},
+		"cooldown": 0,
+		"hud_render": {
+			"should_render": false,
+			"bar_index": 5
+		},
+		"condition": {
+			"type": "origins:and",
+			"conditions": [
+				{
+					"type": "origins:equipped_item",
+					"equipment_slot": "mainhand",
+					"item_condition": {
+						"type": "origins:ingredient",
+						"ingredient": {
+							"tag": "orchid:sword"
+						}
+					}
+				}
+			]
+		}
+	},
+	"speed": {
+		"type": "origins:attribute",
+		"modifier": {
+			"attribute": "minecraft:generic.movement_speed",
+			"operation": "multiply_total",
+			"value": 0.5,
+			"name": "Increased sprinting speed"
+		}
+	},
+	"invul": {
+		"type": "origins:invulnerability",
+		"damage_condition": {
+			"type": "origins:name",
+			"name": "dryout.player",
+			"inverted": true
+		}
+	},
+	"tick_down": {
+		"type": "origins:action_over_time",
+		"entity_action": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:revoke_power",
+					"power": "orchid:fintris/blinkbenefit_invul",
+					"source": "orchid:fintris"
+				},
+				{
+					"type": "origins:revoke_power",
+					"power": "orchid:fintris/blinkbenefit_tick_down",
+					"source": "orchid:fintris"
+				},
+				{
+					"type": "origins:execute_command",
+					"command": "function orchid:fintris/fx/benefitbye"
+				}
+			]
+		},
+		"interval": 5
+	},
+	"tick_down2": {
+		"type": "origins:action_over_time",
+		"entity_action": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:revoke_power",
+					"power": "orchid:fintris/blinkbenefit",
+					"source": "orchid:fintris"
+				},
+				{
+					"type": "origins:execute_command",
+					"command": "function orchid:fintris/fx/benefitbye"
+				}
+			]
+		},
+		"interval": 35
+	},
+	"overlay": {
+		"type": "origins:overlay",
+		"texture": "minecraft:textures/misc/nausea.png",
+		"strength": 0.7,
+		"red": 0.30588235,
+		"green": 0.99607843,
+		"blue": 0.97254902,
+		"draw_mode": "nausea",
+		"draw_phase": "above_hud",
+		"hide_with_hud": false,
+		"visible_in_third_person": false
+	}
+}

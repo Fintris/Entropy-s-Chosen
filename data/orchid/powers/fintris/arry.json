@@ -1,0 +1,109 @@
+{
+    "type": "origins:multiple",
+    "tick": {
+        "type": "origins:resource",
+        "min": 0,
+        "max": 6,
+        "start_value": 6
+    },
+    "loop": {
+        "type": "origins:action_over_time",
+        "interval": 1,
+        "entity_action": {
+            "type": "origins:if_else_list",
+            "actions": [
+                {
+                    "condition": {
+                        "type": "origins:resource",
+                        "resource": "orchid:fintris/arry_tick",
+                        "comparison": "==",
+                        "compare_to": 0
+                    },
+                    "action": {
+                        "type": "origins:revoke_power",
+                        "power": "orchid:fintris/arry",
+                        "source": "orchid:deflect"
+                    }
+                },
+                {
+                    "condition": {
+                        "type": "origins:constant",
+                        "value": true
+                    },
+                    "action": {
+                        "type": "origins:and",
+                        "actions": [
+                            {
+                                "type": "origins:change_resource",
+                                "resource": "orchid:fintris/arry_tick",
+                                "change": -1
+                            },
+                            {
+                                "type": "origins:execute_command",
+                                "command": "execute positioned ~ ~0.65 ~ if entity @e[type=#impact_projectiles,distance=..3.5,tag=!deflected,nbt={inGround:0b}] run function orchid:fintris/thing"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    },
+    "callback": {
+        "type": "origins:action_on_callback",
+        "entity_action_lost": {
+            "type": "origins:if_else",
+            "condition": {
+                "type": "origins:nbt",
+                "nbt": "{Tags:[\"noCooldown\"]}",
+                "inverted": true
+            },
+            "if_action": {
+                "type": "origins:and",
+                "actions": [
+                    {
+                        "type": "origins:trigger_cooldown",
+                        "power": "orchid:fintris/deflect_cooldown"
+                    },
+                    {
+                        "type": "origins:change_resource",
+                        "resource": "orchid:fintris/deflect_count",
+                        "change": 0,
+                        "operation": "set"
+                    }
+                ]
+            },
+            "else_action": {
+                "type": "origins:and",
+                "actions": [
+                    {
+                        "type": "origins:execute_command",
+                        "command": "tag @s remove noCooldown"
+                    },
+                    {
+                        "type": "origins:if_else",
+                        "condition": {
+                            "type": "origins:nbt",
+                            "nbt": "{Tags:[\"starlight.clear\"]}"
+                        },
+                        "if_action": {
+                            "type": "origins:and",
+                            "actions": [
+                                {
+                                    "type": "origins:grant_power",
+                                    "power": "orchid:fintris/decrease_reset",
+                                    "source": "orchid:fintris"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "type": "origins:change_resource",
+                        "resource": "orchid:fintris/deflect_count",
+                        "change": 1,
+                        "operation": "add" 
+                    }
+                ]
+            }
+        }
+    }
+}

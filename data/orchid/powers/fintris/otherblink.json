@@ -1,0 +1,163 @@
+{
+    "type": "origins:action_over_time",
+    "interval": 1,
+    "entity_action": {
+        "type": "origins:and",
+        "actions": [
+            {
+                "type": "origins:if_else",
+                "condition": {
+                    "type": "origins:resource",
+                    "resource": "orchid:fintris/track_directions_charge",
+                    "comparison": "<",
+                    "compare_to": 2
+                },
+                "if_action": {
+                    "type": "origins:change_resource",
+                    "resource": "orchid:fintris/track_directions_cooldown",
+                    "change": 1
+                }
+            },
+            {
+                "type": "origins:if_else",
+                "condition": {
+                    "type": "origins:command",
+                    "command": "execute if entity @s[tag=secondary] run scoreboard players get 1 num",
+                    "comparison": "==",
+                    "compare_to": 1
+                },
+                "if_action": {
+                    "type": "origins:and",
+                    "actions": [
+                        {
+                            "type": "origins:execute_command",
+                            "command": "execute at @s run function orchid:secondary"
+                        },
+                        {
+                            "type": "origins:if_else",
+                            "condition": {
+                                "type": "origins:fall_flying"
+                            },
+                            "if_action": {
+                                "type": "origins:and",
+                                "actions": [
+                                    {
+                                        "type": "origins:add_velocity",
+                                        "z": 0.7,
+                                        "space": "local"
+                                    },
+                                    {
+                                        "type": "origins:execute_command",
+                                        "command": "advancement grant @s only orchid:different"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "origins:if_else",
+                            "condition": {
+                                "type": "origins:power",
+                                "power": "orchid:fintris/backstab",
+                                "source": "orchid:fintris"
+                            },
+                            "if_action": {
+                                "type": "origins:and",
+                                "actions": [
+                                    {
+                                        "type": "origins:revoke_power",
+                                        "power": "orchid:fintris/backstab",
+                                        "source": "orchid:fintris"
+                                    },
+                                    {
+                                        "type": "origins:grant_power",
+                                        "power": "orchid:fintris/backstab",
+                                        "source": "orchid:fintris"
+                                    }
+                                ]
+                            },
+                            "else_action": {
+                                "type": "origins:and",
+                                "actions": [
+                                    {
+                                        "type": "origins:grant_power",
+                                        "power": "orchid:fintris/backstab",
+                                        "source": "orchid:fintris"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "origins:delay",
+                            "action": {
+                                "type": "origins:execute_command",
+                                "command": "function orchid:fintris/fx/dodge"
+                            },
+                            "ticks": 3
+                        },
+                        {
+                            "type": "origins:grant_power",
+                            "power": "orchid:fintris/increase_reset",
+                            "source": "orchid:fintris"
+                        },
+                        {
+                            "type": "origins:if_else",
+                            "condition": {
+                                "type": "origins:on_fire"
+                            },
+                            "if_action": {
+                                "type": "origins:extinguish"
+                            }
+                        },
+                        {
+                            "type": "origins:if_else",
+                            "condition": {
+                                "type": "origins:submerged_in",
+                                "fluid": "minecraft:water"
+                            },
+                            "if_action": {
+                                "type": "origins:gain_air",
+                                "value": 100
+                            }
+                        },
+                        {
+                            "type": "origins:set_fall_distance",
+                            "fall_distance": 0
+                        }
+                    ]
+                }
+            },
+            {
+                "type": "origins:execute_command",
+                "command": "function orchid:remove_tags"
+            }
+        ]
+    },
+    "name": "§d§nEntropic Dodge",
+    "description": "A jump through space that can travel through walls, teleporting you instantly with a short range. Holding §esneak§r while activating will cause a downwards jump, and holding §ejump§r will cause an upwards one. If neither are held, §edirectional keys§r will direct the jump. This can be used twice before going on cooldown (indicated by the ender pearl orbs above Starlight).",
+    "badges": [
+        {
+            "type": "origins:tooltip",
+            "sprite": "origins:textures/gui/badge/active.png",
+            "text": [
+                "Activate with §b[",
+                {
+                    "keybind": "key.origins.secondary_active",
+                    "color": "dark_purple"
+                },
+                "§b]§r."
+            ]
+        },
+        {
+            "sprite": "minecraft:textures/item/arrow.png",
+            "text": "The distance from vertical teleports is greater than that of horizontal ones."
+        },
+        {
+            "sprite": "minecraft:textures/mob_effect/water_breathing.png",
+            "text": "While it can teleport through them, this ability cannot teleport you into a solid block."
+        },
+        {
+            "sprite": "minecraft:textures/mob_effect/slow_falling.png",
+            "text": "If neither §ejump§r, §esneak§r, nor any §edirectional inputs§r are held when activating, you will teleport in place. Normally, this is useless, but in combat against other players, it can occasionally be used as a mix-up."
+        }
+    ]
+}

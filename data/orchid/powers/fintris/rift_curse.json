@@ -1,0 +1,99 @@
+{
+    "hidden": true,
+    "type": "origins:multiple",
+    "callback": {
+        "type": "origins:action_on_callback",
+        "entity_action_added": {
+            "type": "origins:and",
+            "actions": [
+                {
+                    "type": "origins:if_else",
+                    "condition": {
+                        "type": "origins:origin",
+                        "origin": "orchid:fintris",
+                        "layer": "origins:origin"
+                    },
+                    "if_action": {
+                        "type": "origins:execute_command",
+                        "command": "advancement grant @s only orchid:inflict"
+                    }
+                },
+                {
+                    "type": "origins:execute_command",
+                    "command": "title @s actionbar [{\"text\":\"Void Sepsis\",\"color\":\"black\",\"bold\":true,\"italic\":true},{\"text\":\": Healing disabled for 6 seconds.\",\"color\":\"dark_purple\",\"bold\":false,\"italic\":false}]"
+                }
+            ]
+        },
+        "entity_action_removed": {
+            "type": "origins:and",
+            "actions": [
+                {
+                    "type": "origins:execute_command",
+                    "command": "title @s actionbar [{\"text\":\"Void Sepsis \",\"color\":\"black\",\"bold\":true,\"italic\":true},{\"text\":\"has cleared.\",\"color\":\"dark_purple\",\"bold\":false,\"italic\":false}]"
+                },
+                {
+                    "type": "origins:execute_command",
+                    "command": "function orchid:fintris/fx/sepsis"
+                }
+            ]
+        }
+    },
+    "fill": {
+        "type": "origins:action_over_time",
+        "interval": 10,
+        "entity_action": {
+            "type": "origins:change_resource",
+            "resource": "*:*_time",
+            "change": -1
+        }
+    },
+    "time": {
+        "type": "origins:resource",
+        "min": 0,
+        "max": 12,
+        "start_value": 12,
+        "hud_render": {
+            "should_render": true,
+            "sprite_location": "origins:textures/gui/community/spiderkolo/resource_bar_01.png",
+            "bar_index": 19
+        },
+        "min_action": {
+            "type": "origins:revoke_power",
+            "power": "orchid:fintris/rift_curse",
+            "source": "orchid:fintris"
+        }
+    },
+    "disable_healing": {
+        "type": "origins:modify_healing",
+        "modifier": {
+            "operation": "multiply_total",
+            "value": -1
+        }
+    },
+    "particles2": {
+        "type": "origins:particle",
+        "particle": {
+            "type": "minecraft:soul_fire_flame"
+        },
+        "frequency": 1
+    },
+    "glow": {
+        "type": "origins:self_glow",
+        "use_teams": false,
+        "red": 0.08235294117,
+        "green": 0.01176470588,
+        "blue": 0.16078431372
+    },
+    "overlay": {
+        "type": "origins:overlay",
+        "texture": "minecraft:textures/misc/nausea.png",
+        "strength": 0.7,
+        "red": 0.08235294117,
+        "green": 0.01176470588,
+        "blue": 0.16078431372,
+        "draw_mode": "nausea",
+        "draw_phase": "above_hud",
+        "hide_with_hud": false,
+        "visible_in_third_person": false
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "__comment": "Made with TheDestruc7i0n's advancements generator: https://advancements.thedestruc7i0n.ca",
+    "display": {
+        "title": {
+            "text": "Dimensional Charge",
+            "color": "green"
+        },
+        "description": {
+            "text": "Hit an opponent right after puncturing them with Entropic Blink's power surge."
+        },
+        "icon": {
+            "item": "minecraft:potion",
+            "nbt": "{CustomPotionColor:10191615}"
+        },
+        "frame": "task",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "no": {
+            "trigger": "minecraft:impossible"
+        }
+    },
+    "rewards": {
+        "experience": 0
+    },
+    "parent": "orchid:puncture"
+}

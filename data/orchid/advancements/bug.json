@@ -1,0 +1,28 @@
+{
+    "__comment": "Made with TheDestruc7i0n's advancements generator: https://advancements.thedestruc7i0n.ca",
+    "display": {
+        "title": {
+            "text": "Intense",
+            "color": "dark_purple"
+        },
+        "description": {
+            "text": "Deflect a speeding arrow with the edge of your blade."
+        },
+        "icon": {
+            "item": "minecraft:spectral_arrow"
+        },
+        "frame": "challenge",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "no": {
+            "trigger": "minecraft:impossible"
+        }
+    },
+    "rewards": {
+        "experience": 20
+    },
+    "parent": "orchid:root"
+}

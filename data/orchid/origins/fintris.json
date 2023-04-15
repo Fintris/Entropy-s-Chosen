@@ -1,0 +1,27 @@
+{
+	"powers": [
+		"orchid:fintris/tp",
+		"orchid:fintris/sharpen",
+		"orchid:fintris/blink",
+		"orchid:fintris/otherblink",
+		"orchid:fintris/track_directions",
+		"orchid:fintris/alien_body",
+		"orchid:fintris/starlight_increase",
+		"orchid:fintris/starlight_decrease",
+		"orchid:fintris/defenses",
+		"orchid:fintris/deflect",
+		"orchid:fintris/cosmicppl",
+		"orchid:fintris/strange_energy",
+		"orchid:fintris/advancements",
+		"orchid:fintris/credits",
+		"orchid:fintris/glimmer"
+	],
+	"icon": {
+		"item": "minecraft:ender_eye",
+		"tag": "{Unbreakable:1b,Enchantments:[{id:\"minecraft:sharpness\",lvl:5s},{id:\"minecraft:knockback\",lvl:2s},{id:\"minecraft:fire_aspect\",lvl:2s},{id:\"minecraft:looting\",lvl:3s},{id:\"minecraft:sweeping\",lvl:3s}]}"
+	},
+	"order": 10,
+	"impact": 3,
+	"name": "§5Entropy's Chosen",
+	"description": "Entropy's Chosen are hosts of the Entropy parasite, granting them many powers but warping their physiology to depend on them. \nEntropy's Chosen provides an emphasis on combat and exploration, allowing great feats and granting many options to those who properly master its abilities."
+}

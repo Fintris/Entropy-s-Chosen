@@ -1,0 +1,434 @@
+{
+	"name": "§d§nEntropic Step",
+	"description": "Activate while standing still to channel your dimensional power, charging a long-range teleport of up to 200 blocks. Once the teleport is finished, you will enter §5Infinite Potential§r for 3 seconds.\nStriking an enemy with a weapon while in §5Infinite§r\n§5Potential§r will exit you from it, filling half of your §3Starlight§r meter, piercing the armor of the target, and inflicting §5Void Sepsis§r upon them, preventing all healing for 6 seconds.\nThis ability has a 30-second cooldown, during which §dEntropic§r\n§dBlink§r also cannot be used. This cooldown can be reduced or reset by consuming §3Starlight§r.",
+	"badges": [
+		{
+			"type": "origins:tooltip",
+			"sprite": "origins:textures/gui/badge/active.png",
+			"text": [
+				"Charge with §b[",
+				{
+					"keybind": "key.origins.primary_active",
+					"color": "dark_purple"
+				},
+				"§b]§r while walking or standing still."
+			]
+		},
+		{
+			"sprite": "minecraft:textures/item/ender_pearl.png",
+			"text": "Punching an enemy with a bare hand while charging this ability or while in §5Infinite§r\n§5Potential§r will launch them. This will not have any abnormal effects besides knockback, but will not cancel §5Infinite Potential§r."
+		},
+		{
+			"sprite": "minecraft:textures/mob_effect/wither.png",
+			"text": "Taking damage while charging this ability will cancel the charge completely. Additionally, you will be severely slowed while charging."
+		},
+		{
+			"sprite": "minecraft:textures/item/glow_ink_sac.png",
+			"text": "You will glow purple and shake while in \n§5Infinite Potential§r, and will gain a purple tint around the edges of your screen."
+		}
+	],
+	"type": "origins:multiple",
+	"storecharge": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 30,
+		"hud_render": {
+			"should_render": true,
+			"sprite_location": "origins:textures/gui/community/huang/resource_bar_01.png",
+			"bar_index": 0,
+			"condition": {
+				"type": "origins:resource",
+				"comparison": ">",
+				"resource": "*:*_storecharge",
+				"compare_to": 0
+			}
+		},
+		"min_action": {
+			"type": "origins:revoke_power",
+			"power": "orchid:fintris/slow",
+			"source": "orchid:fintris"
+		},
+		"max_action": {
+			"type": "origins:revoke_power",
+			"power": "orchid:fintris/slow",
+			"source": "orchid:fintris"
+		}
+	},
+	"cooldown1": {
+		"type": "origins:action_over_time",
+		"entity_action": {
+			"type": "origins:change_resource",
+			"resource": "*:*_storecharge",
+			"change": -2
+		},
+		"interval": 1,
+		"condition": {
+			"type": "origins:resource",
+			"resource": "*:*_held",
+			"comparison": "==",
+			"compare_to": 4
+		}
+	},
+	"holdfx": {
+		"type": "origins:action_over_time",
+		"entity_action": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:execute_command",
+					"command": "function orchid:fintris/fx/step_charge"
+				}
+			]
+		},
+		"interval": 5,
+		"condition": {
+			"type": "origins:and",
+			"conditions": [
+				{
+					"type": "origins:resource",
+					"resource": "*:*_held",
+					"comparison": "==",
+					"compare_to": 0
+				},
+				{
+					"type": "origins:sprinting",
+					"inverted": true
+				},
+				{
+					"type": "origins:resource",
+					"comparison": "==",
+					"resource": "*:*_cooldown",
+					"compare_to": 0
+				}
+			]
+		}
+	},
+	"hold": {
+		"type": "origins:action_over_time",
+		"entity_action": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:change_resource",
+					"resource": "*:*_storecharge",
+					"change": 1
+				}
+			]
+		},
+		"interval": 1,
+		"condition": {
+			"type": "origins:and",
+			"conditions": [
+				{
+					"type": "origins:resource",
+					"resource": "*:*_held",
+					"comparison": "==",
+					"compare_to": 0
+				},
+				{
+					"type": "origins:sprinting",
+					"inverted": true
+				},
+				{
+					"type": "origins:resource",
+					"comparison": "==",
+					"resource": "*:*_cooldown",
+					"compare_to": 0
+				}
+			]
+		}
+	},
+	"held": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 4,
+		"start_value": 0,
+		"hud_render": {
+			"should_render": false
+		}
+	},
+	"release": {
+		"type": "origins:action_over_time",
+		"entity_action": {
+			"type": "origins:change_resource",
+			"resource": "*:*_held",
+			"change": 1
+		},
+		"interval": 1
+	},
+	"holding": {
+		"type": "origins:active_self",
+		"cooldown": 1,
+		"key": {
+			"key": "key.origins.primary_active",
+			"continuous": true
+		},
+		"hud_render": {
+			"should_render": false
+		},
+		"entity_action": {
+			"type": "origins:change_resource",
+			"resource": "*:*_held",
+			"change": -4
+		}
+	},
+	"charge": {
+		"type": "origins:active_self",
+		"entity_action": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:change_resource",
+					"resource": "*:*_storecharge",
+					"change": -30
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:power",
+						"power": "orchid:fintris/backstab",
+						"source": "orchid:fintris"
+					},
+					"if_action": {
+						"type": "origins:and",
+						"actions": [
+							{
+								"type": "origins:revoke_power",
+								"power": "orchid:fintris/backstab",
+								"source": "orchid:fintris"
+							},
+							{
+								"type": "origins:grant_power",
+								"power": "orchid:fintris/backstab",
+								"source": "orchid:fintris"
+							}
+						]
+					},
+					"else_action": {
+						"type": "origins:and",
+						"actions": [
+							{
+								"type": "origins:grant_power",
+								"power": "orchid:fintris/backstab",
+								"source": "orchid:fintris"
+							}
+						]
+					}
+				},
+				{
+					"type": "origins:execute_command",
+					"command": "scoreboard players set @s fintris.damageDealt 0"
+				},
+				{
+					"type": "origins:execute_command",
+					"command": "scoreboard players set @s fintris.damageDealtResisted 0"
+				},
+				{
+					"type": "origins:delay",
+					"action": {
+						"type": "origins:execute_command",
+						"command": "function orchid:fintris/fx/step"
+					},
+					"ticks": 5
+				},
+				{
+					"type": "origins:extinguish"
+				},
+				{
+					"type": "origins:set_fall_distance",
+					"fall_distance": 0
+				},
+				{
+					"type": "origins:trigger_cooldown",
+					"power": "*:*_cooldown"
+				},
+				{
+					"type": "origins:gain_air",
+					"value": 200
+				},
+				{
+					"type": "origins:grant_power",
+					"power": "orchid:fintris/increase_reset",
+					"source": "orchid:fintris"
+				},
+				{
+					"type": "origins:grant_power",
+					"power": "orchid:fintris/sharpenactual",
+					"source": "orchid:fintris"
+				},
+				{
+					"type": "origins:change_resource",
+					"resource": "*:*_storecharge",
+					"change": -30
+				},
+				{
+					"type": "origins:raycast",
+					"distance": 200,
+					"block": true,
+					"entity": true,
+					"shape_type": "visual",
+					"fluid_handling": "none",
+					"miss_action": {
+						"type": "origins:and",
+						"actions": [
+							{
+								"type": "origins:execute_command",
+								"command": "execute anchored eyes run tp @s ^ ^ ^200"
+							},
+							{
+								"type": "origins:if_else",
+								"condition": {
+									"type": "origins:fall_flying"
+								},
+								"if_action": {
+									"type": "origins:and",
+									"actions": [
+										{
+											"type": "origins:add_velocity",
+											"z": 1.7,
+											"space": "local"
+										},
+										{
+											"type": "origins:execute_command",
+											"command": "advancement grant @s only orchid:different"
+										}
+									]
+								}
+							}
+						]
+					},
+					"command_step": 1,
+					"command_along_ray": "particle dust 0.302 1.000 0.859 1 ~ ~ ~ 0 0 0 1 0 force",
+					"command_at_hit": "tp @s ~ ~ ~"
+				}
+			]
+		},
+		"cooldown": 10,
+		"hud_render": {
+			"should_render": false,
+			"sprite_location": "origins:textures/gui/community/spiderkolo/resource_bar_01.png",
+			"bar_index": 2
+		},
+		"condition": {
+			"type": "origins:and",
+			"conditions": [
+				{
+					"type": "origins:sprinting",
+					"inverted": true
+				},
+				{
+					"type": "origins:resource",
+					"comparison": "==",
+					"resource": "*:*_storecharge",
+					"compare_to": 30
+				},
+				{
+					"type": "origins:resource",
+					"comparison": "==",
+					"resource": "*:*_cooldown",
+					"compare_to": 0
+				}
+			]
+		},
+		"key": {
+			"key": "key.origins.primary_active",
+			"continuous": true
+		}
+	},
+	"cooldown": {
+		"type": "origins:cooldown",
+		"cooldown": 600,
+		"hud_render": {
+			"sprite_location": "origins:textures/gui/community/huang/resource_bar_02.png",
+			"bar_index": 19
+		}
+	},
+	"reset_when_damaged": {
+		"type": "origins:self_action_when_hit",
+		"entity_action": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:change_resource",
+					"resource": "*:*_storecharge",
+					"change": -30
+				}
+			]
+		},
+		"damage_condition": {
+			"type": "origins:and",
+			"conditions": [
+				{
+					"type": "origins:name",
+					"name": "sweetBerryBush",
+					"inverted": "true"
+				},
+				{
+					"type": "origins:name",
+					"name": "thorns",
+					"inverted": "true"
+				},
+				{
+					"type": "origins:name",
+					"name": "poison",
+					"inverted": "true"
+				},
+				{
+					"type": "origins:name",
+					"name": "inFire",
+					"inverted": "true"
+				},
+				{
+					"type": "origins:name",
+					"name": "lava",
+					"inverted": "true"
+				},
+				{
+					"type": "origins:name",
+					"name": "freeze",
+					"inverted": "true"
+				},
+				{
+					"type": "origins:name",
+					"name": "poison",
+					"inverted": "true"
+				},
+				{
+					"type": "origins:name",
+					"name": "drown",
+					"inverted": "true"
+				},
+				{
+					"type": "origins:name",
+					"name": "wither",
+					"inverted": "true"
+				},
+				{
+					"type": "origins:name",
+					"name": "hotFloor",
+					"inverted": "true"
+				}
+			]
+		}
+	},
+	"slow_while_charging": {
+		"type": "origins:action_over_time",
+		"entity_action": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:grant_power",
+					"power": "orchid:fintris/slow",
+					"source": "orchid:fintris"
+				}
+			]
+		},
+		"interval": 1,
+		"condition": {
+			"type": "origins:resource",
+			"comparison": ">",
+			"resource": "orchid:fintris/tp_storecharge",
+			"compare_to": 0
+		}
+	}
+}

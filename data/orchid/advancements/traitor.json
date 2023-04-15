@@ -1,0 +1,28 @@
+{
+    "__comment": "Made with TheDestruc7i0n's advancements generator: https://advancements.thedestruc7i0n.ca",
+    "display": {
+        "title": {
+            "text": "No Cost Too Great",
+            "color": "aqua"
+        },
+        "description": {
+            "text": "Kill another Entropy's Chosen during Infinite Potential, while they have Void Sepsis."
+        },
+        "icon": {
+            "item": "minecraft:ender_pearl"
+        },
+        "frame": "challenge",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "no": {
+            "trigger": "minecraft:impossible"
+        }
+    },
+    "rewards": {
+        "experience": 0
+    },
+    "parent": "orchid:inflict"
+}

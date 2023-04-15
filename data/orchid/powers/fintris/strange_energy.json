@@ -1,0 +1,35 @@
+{
+	"name": "§d§nStrange Energy",
+	"description": "Your Starlight-fueled body allows increased benefit from all foods, and for §eRotten Flesh§r and §eSpider Eyes§r without negative effects. You also naturally give off purple particles, and have a slightly purple tint.",
+	"type": "origins:multiple",
+	"particle": {
+		"type": "origins:particle",
+		"particle": {
+			"type": "minecraft:dust",
+			"params": "0.455 0.243 0.639 1"
+		},
+		"frequency": 5,
+		"condition": {
+			"type": "origins:and",
+			"conditions": [
+				{
+					"type": "origins:invisible",
+					"inverted": true
+				},
+				{
+					"type": "origins:resource",
+					"comparison": "<",
+					"resource": "*:*_starlight",
+					"compare_to": 250
+				}
+			]
+		}
+	},
+	"modelcolor": {
+		"type": "origins:model_color",
+		"alpha": 0.89,
+		"red": 0.74901961,
+		"green": 0.58039216,
+		"blue": 0.89411765
+	}
+}
