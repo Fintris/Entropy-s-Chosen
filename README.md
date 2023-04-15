@@ -6,6 +6,7 @@ Entropy's Chosen provides an emphasis on combat and exploration, allowing great 
 master its abilities.*
 
 Icon made by Shiny#0412
+
 Lots of help with code, design and descriptions from TheViralMelon#3716
 
 <img title="Entrance" alt="Entrance" src="https://cdn.modrinth.com/data/hX5NTsZ7/images/0fb445d64645870fc767209b49695427b632953e.gif">
